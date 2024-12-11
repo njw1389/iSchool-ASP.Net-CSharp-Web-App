@@ -1,0 +1,42 @@
+﻿@model P3.Models.ResearchModel
+@{
+    ViewData["Title"] = "Research";
+}
+
+<h1 class="title-h1-ctm zzz yyy">Our Research</h1>
+
+<h2>Research by Interest Area</h2>
+@foreach (var area in Model.byInterestArea)
+{
+    <li>
+        <h3>@area.areaName</h3>
+        <ul id="area-@area.areaName.Replace(" ", "-")" class="pagination-list">
+            @for (int i = 0; i < 10 && i < area.citations.Count; i++)
+            {
+                <li>@area.citations[i]</li>
+            }
+        </ul>
+        @if (area.citations.Count > 10)
+        {
+            <button class="load-more" data-list="area-@area.areaName.Replace(" ", "-")">Load More</button>
+        }
+    </li>
+}
+
+<h2>Research by Faculty</h2>
+@foreach (var faculty in Model.byFaculty)
+{
+    <li>
+        <h3>@faculty.facultyName (@faculty.username)</h3>
+        <ul id="faculty-@faculty.username" class="pagination-list">
+            @for (int i = 0; i < 10 && i < faculty.citations.Count; i++)
+            {
+                <li>@faculty.citations[i]</li>
+            }
+        </ul>
+        @if (faculty.citations.Count > 10)
+        {
+            <button class="load-more" data-list="faculty-@faculty.username">Load More</button>
+        }
+    </li>
+}

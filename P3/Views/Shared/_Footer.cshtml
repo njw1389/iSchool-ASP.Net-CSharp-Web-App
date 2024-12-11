@@ -1,0 +1,83 @@
+﻿@model P3.Models.FooterModel
+
+<head>
+    <style>
+        /* Styles for the RIT footer */
+        .rit-footer {
+            background-color: #F76902;
+            color: #FFFFFF;
+            padding: 40px 0;
+        }
+
+        /* Styles for the container within the RIT footer */
+        .rit-footer .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+        }
+
+        /* Styles for headings within the RIT footer */
+        .rit-footer h5 {
+            color: #FFFFFF;
+            font-weight: 600;
+            text-decoration: underline;
+            text-underline-offset: 8px;
+            margin-bottom: 15px;
+        }
+
+        /* Styles for links within the RIT footer */
+        .rit-footer a {
+            color: #FFFFFF;
+        }
+
+        /* Styles for unordered lists within the RIT footer */
+        .rit-footer ul {
+            padding-left: 0;
+        }
+
+        /* Styles for list items within the RIT footer */
+        .rit-footer ul li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<footer class="border-top footer rit-footer rit-footer-margin-class">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <!-- Social section -->
+                <h5 style="cursor: default;" class="exclude">@Model.social.title</h5>
+                <p style="cursor: default;">@Html.Raw(Model.social.tweet.Replace("https://t.co/NXHaXKjBWu", "<a href=\"https://t.co/NXHaXKjBWu\" target=\"_blank\">https://t.co/NXHaXKjBWu</a>"))</p>
+                <p style="cursor: default;">@Model.social.by</p>
+                <p style="cursor: default;">
+                    <a href="@Model.social.twitter">Twitter</a> |
+                    <a href="@Model.social.facebook">Facebook</a>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <!-- Quick Links section -->
+                <h5 style="cursor: default;" class="exclude">Quick Links</h5>
+                <ul class="list-unstyled">
+                    @foreach (var link in Model.quickLinks)
+                    {
+                        <li><a href="@link.href" target="_blank">@link.title</a></li>
+                    }
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <!-- Copyright section -->
+                <h5 style="cursor: default;" class="exclude">@Model.copyright.title</h5>
+                <p style="cursor: default;">@Html.Raw(Model.copyright.html)</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- News link -->
+                <p><a href="@Model.news" target="_blank">@Model.news</a></p>
+            </div>
+        </div>
+    </div>
+</footer>

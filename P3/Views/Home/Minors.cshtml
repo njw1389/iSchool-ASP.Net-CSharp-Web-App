@@ -1,0 +1,231 @@
+﻿@model P3.Models.MinorsModel
+
+@{
+    ViewData["Title"] = "Minors";
+}
+
+<head>
+    <style>
+        /* Styles for modal */
+        .modal {
+            height: auto;
+            overflow-y: visible;
+            overflow-x: visible;
+        }
+
+        .jqmodal {
+            height: auto;
+        }
+
+        .modal-loading {
+            min-height: 300px;
+        }
+
+        .content-loaded {
+            height: unset;
+        }
+
+        /* Styles for minors section */
+        .minors-section {
+            margin-bottom: 40px;
+        }
+
+        .minors-section h2 {
+            color: #F76902;
+            font-size: 24px;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .minors-section h3 {
+            color: #613318;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .minors-section h4 {
+            font-size: 18px;
+            margin-bottom: 6px;
+        }
+
+        .minors-section p {
+            margin-bottom: 10px;
+        }
+
+        .minors-section ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 0;
+        }
+
+        .minors-section li {
+            text-align: center;
+            margin: 5px;
+        }
+
+        .course-button a {
+            margin-bottom: 10px;
+        }
+
+        /* Styles for buttons */
+        .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+            box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #F76902;
+        }
+
+        .btn,
+        .btn:hover {
+            font-weight: 600;
+            background-color: #F76902;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Additional styles */
+        .mmm:first-of-type {
+            margin-top: 10px;
+        }
+
+        /* Spinner styles */
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #F76902;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 2s linear infinite;
+            position: absolute;
+            top: 47%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #spinner {
+            display: none;
+        }
+    </style>
+</head>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Global object to store fetched course data
+            var fetchedCourses = {};
+
+            // Event handler for course links
+            $('.course-link').click(function (e) {
+                e.preventDefault();
+                var courseId = $(this).data('course-id');
+
+                // Reset the modal content
+                $('#course-title').text('');
+                $('#course-id').text('');
+                $('#course-description').text('');
+                $('#error-message').text('');
+                $('#course-modal').removeClass('content-loaded'); // Remove the class before loading new content
+                $('#course-modal').addClass('modal-loading'); // Add the modal-loading class
+
+                // Check if the course data is already fetched
+                if (fetchedCourses[courseId]) {
+                    var courseData = fetchedCourses[courseId];
+                    $('#course-title').text(courseData.title.replace(/&amp;/g, '&'));
+                    $('#course-id').text(courseData.courseID);
+                    $('#course-description').text(courseData.description);
+                    $('#spinner').hide();
+                    $('#course-modal').addClass('content-loaded');
+                    $('#course-modal').removeClass('modal-loading'); // Remove the modal-loading class
+                } else {
+                    // Show the spinner
+                    $('#spinner').show();
+
+                    // AJAX request to retrieve course details
+                    $.ajax({
+                        url: '@Url.Action("GetCourseDetails", "Home")',
+                        data: { courseId: courseId },
+                        type: 'GET',
+                        success: function (data) {
+                            if (data) {
+                                // Store the fetched course data
+                                fetchedCourses[data.courseID] = data;
+
+                                $('#course-title').text(data.title.replace(/&amp;/g, '&'));
+                                $('#course-id').text(data.courseID);
+                                $('#course-description').text(data.description);
+                                // Hide the spinner
+                                $('#spinner').hide();
+                                $('#course-modal').addClass('content-loaded');
+                                $('#course-modal').removeClass('modal-loading'); // Remove the modal-loading class
+                            }
+                        },
+                        error: function () {
+                            $('#course-title').text('Error');
+                            $('#course-id').text('');
+                            $('#course-description').text('');
+                            $('#error-message').text('An error occurred while retrieving course details.');
+                            // Hide the spinner
+                            $('#spinner').hide();
+                            $('#course-modal').addClass('content-loaded');
+                            $('#course-modal').removeClass('modal-loading'); // Remove the modal-loading class
+                        }
+                    });
+                }
+            });
+
+            // Hide all minors except the first 3
+            $(".minors-section > div").slice(3).hide();
+
+            // Add "Load More" button
+            $(".minors-section").append('<div class="text-center"><button style="font-size:1.3rem;" id="loadMoreBtn" class="btn">Load More</button></div>');
+
+            // Show/hide minors on button click
+            $("#loadMoreBtn").click(function () {
+                $(".minors-section > div:hidden").slice(0, 3).slideDown();
+
+                if ($(".minors-section > div:hidden").length == 0) {
+                    $(this).fadeOut();
+                }
+            });
+        });
+    </script>
+}
+
+<!-- Course modal -->
+<div id="course-modal" class="jqmodal">
+    <div id="spinner" class="spinner"></div>
+    <h2 style="cursor: default;" id="course-title"></h2>
+    <h5 style="cursor: default;" id="course-id"></h5>
+    <p style="cursor: default;" id="course-description"></p>
+    <p style="cursor: default;" id="error-message" style="color: red;"></p>
+</div>
+
+<!-- Minors section -->
+<div class="minors-section">
+    <h1 style="cursor: default;" class="title-h1-ctm zzz yyy qqq">Our Minors</h1>
+
+    @foreach (var minor in Model.UgMinors)
+    {
+        <div style="margin-bottom: 30px;">
+            <h2 class="mmm" style="font-size:2rem; cursor:default;">@minor.title</h2>
+            <p style="cursor: default;">@minor.description</p>
+            <h3 style="font-size:1.75rem; cursor:default;">Courses:</h3>
+            <ul>
+                @foreach (var course in minor.courses)
+                {
+                    <li>
+                        <div class="course-button">
+                            <a href="#course-modal" rel="modal:open" class="course-link btn" style="font-weight: 600; background-color: #F76902; color: white;" data-course-id="@course">@course</a>
+                        </div>
+                    </li>
+                }
+            </ul>
+            @if (!string.IsNullOrEmpty(minor.note))
+            {
+                <p style="cursor: default;"><strong>Note: </strong>@minor.note</p>
+            }
+        </div>
+    }
+</div>

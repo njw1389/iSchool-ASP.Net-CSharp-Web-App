@@ -1,0 +1,199 @@
+﻿@model P3.Models.PeopleModel
+
+@{
+    ViewData["Title"] = "People";
+}
+
+<head>
+    <!-- Link to the people.css file with automatic versioning -->
+    <link rel="stylesheet" href="~/css/people.css" asp-append-version="true" />
+    <style>
+        /* Default font styles */
+        body {
+            font-family: "Source Sans Pro", sans-serif;
+            color: #565656;
+        }
+
+        /* Heading font styles */
+        h1:not(.exclude), h2:not(.exclude), h3:not(.exclude), h4:not(.exclude), h5:not(.exclude), h6:not(.exclude) {
+            font-family: "Roboto Slab", serif;
+            color: #513127;
+        }
+
+        /* Card styles */
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card-img-top {
+            border-radius: 10px 10px 0 0;
+            object-fit: cover;
+            height: 350px;
+        }
+
+        /* Button styles */
+        .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+            box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #F76902;
+        }
+
+        .btn,
+        .btn:hover {
+            font-weight: 600;
+            background-color: #F76902;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Tab styles */
+        #tabs .ui-tabs-nav .ui-tabs-tab.ui-tabs-active {
+            background-color: #F36E21;
+            border: 1px solid #F36E21;
+            color: white;
+        }
+
+        #tabs .ui-tabs-nav .ui-tabs-tab.ui-tabs-active a {
+            color: white;
+        }
+
+        #tabs .ui-tabs-nav li.ui-state-active a {
+            cursor: default;
+        }
+    </style>
+</head>
+
+<!-- Main title -->
+<h1 style="cursor: default;" class="exclude zzz yyy title-h1-ctm">@Model.title</h1>
+<!-- Subtitle -->
+<p style="cursor: default;" class="zzz">@Model.subTitle</p>
+
+<!-- Container for tabs -->
+<div id="HideMePlease" style="display:none;">
+    <div id="tabs">
+        <ul>
+            <!-- Tab links -->
+            <li><a href="#faculty-tab">Faculty</a></li>
+            <li><a href="#staff-tab">Staff</a></li>
+        </ul>
+
+        <!-- Faculty tab content -->
+        <div id="faculty-tab">
+            <div class="row">
+                @foreach (var faculty in Model.faculty)
+                {
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <img src="@faculty.imagePath" class="card-img-top" alt="@faculty.name">
+                            <div class="card-body" style="padding-bottom: 0px;">
+                                <h5 style="cursor: default;" class="card-title">@faculty.name</h5>
+                                <p style="cursor: default;">@faculty.username</p>
+                                <p style="cursor: default;" class="card-text">@faculty.tagline</p>
+
+                                @if (!string.IsNullOrEmpty(faculty.title))
+                                {
+                                    <p style="cursor: default;">@faculty.title</p>
+                                }
+                                @if (!string.IsNullOrEmpty(faculty.interestArea))
+                                {
+                                    <p style="cursor: default;"><strong>Interest Area:</strong> @faculty.interestArea</p>
+                                }
+                                @if (!string.IsNullOrEmpty(faculty.office))
+                                {
+                                    <p style="cursor: default;"><strong>Office:</strong> @faculty.office</p>
+                                }
+                                @if (!string.IsNullOrEmpty(faculty.phone))
+                                {
+                                    <p><a href="tel:@faculty.phone">@faculty.phone</a></p>
+                                }
+                                @if (!string.IsNullOrEmpty(faculty.email))
+                                {
+                                    <p><a href="mailto:@faculty.email">@faculty.email</a></p>
+                                }
+
+                                <p>
+                                    @if (!string.IsNullOrEmpty(faculty.website))
+                                    {
+                                        <a href="@faculty.website" target="_blank" class="btn" style="color:#FFFFFF; margin-bottom:5px;">Website</a>
+                                    }
+                                    @if (!string.IsNullOrEmpty(faculty.twitter))
+                                    {
+                                        <a href="@faculty.twitter" target="_blank" class="btn" style="color:#FFFFFF; margin-bottom:5px;">Twitter</a>
+                                    }
+                                    @if (!string.IsNullOrEmpty(faculty.facebook))
+                                    {
+                                        <a href="@faculty.facebook" target="_blank" class="btn" style="color:#FFFFFF; margin-bottom:5px;">Facebook</a>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Staff tab content -->
+        <div id="staff-tab">
+            <div class="row">
+                @foreach (var staff in Model.staff)
+                {
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <img src="@staff.imagePath" class="card-img-top" alt="@staff.name">
+                            <div class="card-body">
+                                <h5 style="cursor: default;" class="card-title">@staff.name</h5>
+                                <p style="cursor: default;">@staff.username</p>
+                                <p style="cursor: default;" class="card-text">@staff.tagline</p>
+
+                                @if (!string.IsNullOrEmpty(staff.title))
+                                {
+                                    <p style="cursor: default;">@staff.title</p>
+                                }
+                                @if (!string.IsNullOrEmpty(staff.interestArea))
+                                {
+                                    <p style="cursor: default;"><strong>Interest Area:</strong> @staff.interestArea</p>
+                                }
+                                @if (!string.IsNullOrEmpty(staff.office))
+                                {
+                                    <p style="cursor: default;"><strong>Office:</strong> @staff.office</p>
+                                }
+                                @if (!string.IsNullOrEmpty(staff.phone))
+                                {
+                                    <p><a href="tel:@staff.phone">@staff.phone</a></p>
+                                }
+                                @if (!string.IsNullOrEmpty(staff.email))
+                                {
+                                    <p><a href="mailto:@staff.email">@staff.email</a></p>
+                                }
+
+                                <p>
+                                    @if (!string.IsNullOrEmpty(staff.website))
+                                    {
+                                        <a href="@staff.website" target="_blank" class="btn" style="color:#FFFFFF; margin-bottom:5px;">Website</a>
+                                    }
+                                    @if (!string.IsNullOrEmpty(staff.twitter))
+                                    {
+                                        <a href="@staff.twitter" target="_blank" class="btn" style="color:#FFFFFF; margin-bottom:5px;">Twitter</a>
+                                    }
+                                    @if (!string.IsNullOrEmpty(staff.facebook))
+                                    {
+                                        <a href="@staff.facebook" target="_blank" class="btn" style="color:#FFFFFF; margin-bottom:5px;">Facebook</a>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Link to the people.js file -->
+    <script src="~/js/people.js"></script>
+}

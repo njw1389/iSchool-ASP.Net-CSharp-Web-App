@@ -1,0 +1,341 @@
+﻿@model P3.Models.EmploymentModel
+
+@{
+    ViewData["Title"] = "Employment";
+}
+
+@section Scripts {
+    <script>
+        // Ensure the script runs once the document is fully loaded
+        $(document).ready(function () {
+            // Initialize DataTables on the element with the ID 'coop-table' & 'employment-table'.
+            $('#coop-table').DataTable();
+            $('#employment-table').DataTable();
+        });
+    </script>
+}
+
+<head>
+    <style>
+        /* Styles for stat divs */
+        .stat-div {
+            background-color: #FFFFFF;
+            width: 20%;
+            min-width: 240px;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 8px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .stat-div-container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 0px;
+        }
+
+        .stat-div p {
+            margin-bottom: 0;
+            color: #555;
+        }
+
+        .stat-div h3 {
+            color: #F76902;
+            font-weight: 600;
+        }
+
+        /* Styles for degree statistics section */
+        .degree-statistics h2 {
+            text-align: center;
+        }
+
+        /* Styles for introduction section */
+        .introduction h2 {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .intro-div-contain {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .intro-div {
+            background-color: #FFFFFF;
+            width: 40%;
+            min-width: 350px;
+            padding: 35px;
+            margin: 10px;
+            border-radius: 8px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .intro-div p {
+            margin-bottom: 0;
+            color: #555;
+        }
+
+        .intro-div h3 {
+            color: #F76902;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        /* Styles for employers and careers section */
+        .employers-career {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin-bottom: 0px;
+        }
+
+        .employers,
+        .careers {
+            width: 50%;
+            text-align: center;
+            background-color: #FFFFFF;
+            width: 40%;
+            min-width: 350px;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 8px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .careers h3,
+        .employers h3 {
+            color: #F76902;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .careers ul li,
+        .employers ul li {
+            margin-bottom: 0;
+            color: #555;
+        }
+
+        .careers ul,
+        .employers ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+
+        /* Styles for co-op table and employment table sections */
+        .coop-table h2,
+        .employment-table h2 {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .coop-table-container,
+        .employment-table-container {
+            border: 2px solid #F76902;
+            padding: 10px;
+            border-radius: 8px;
+            width: 950px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .coop-table-container table,
+        .employment-table-container table {
+            background-color: white;
+        }
+
+        .coop-table-container tbody tr:nth-child(odd),
+        .employment-table-container tbody tr:nth-child(odd) {
+            background-color: #FFEDDF;
+        }
+
+        .coop-table-container tbody tr:nth-child(even),
+        .employment-table-container tbody tr:nth-child(even) {
+            background-color: white;
+        }
+
+        /* Styles for DataTables pagination and search */
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            color: #F76902 !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background-color: #F76902 !important;
+            color: white !important;
+        }
+
+        .dataTables_wrapper .dataTables_filter input {
+            border: 1px solid #F76902;
+        }
+
+        .dataTables_wrapper .dataTables_length select {
+            border: 1px solid #F76902;
+        }
+
+        /* Styles for the map container */
+        .map-container iframe {
+            width: 1015px;
+            height: 1015px;
+            padding: 0%;
+            margin: 0;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 1015px;
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        /* Styles for the custom container */
+        .contain-custom {
+            background-color: #F76902;
+            padding-bottom: 60px;
+            padding-top: 1px;
+        }
+    </style>
+</head>
+
+@if (Model != null)
+{
+    <!-- Main heading -->
+    <h1 class="title-h1-ctm zzz yyy" style="margin-bottom:20px; cursor:default;">Student & Graduate Employment</h1>
+
+    <div class="contain-custom">
+        <!-- Introduction section -->
+        <div class="introduction">
+            <h2 style="cursor: default;" class="white">@Model.introduction.title</h2>
+            <div class="intro-div-contain">
+                @foreach (var item in Model.introduction.content)
+                {
+                    <div class="intro-div">
+                        <h3 style="cursor: default;">@item.title</h3>
+                        <p style="cursor: default;">@item.description</p>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Degree statistics section -->
+        <div class="degree-statistics">
+            <h2 style="color:#FFFFFF; cursor:default;">@Model.degreeStatistics.title</h2>
+            <div class="stat-div-container">
+                @foreach (var stat in Model.degreeStatistics.statistics)
+                {
+                    <div class="stat-div">
+                        <h3 style="cursor: default;">@stat.value</h3>
+                        <p style="cursor: default;">@stat.description</p>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Employers and careers section -->
+        <div class="employers-career">
+            <div class="employers">
+                <h3 style="cursor: default;">@Model.employers.title</h3>
+                <ul>
+                    @foreach (var employer in Model.employers.employerNames)
+                    {
+                        <li style="cursor: default;">@employer</li>
+                    }
+                </ul>
+            </div>
+
+            <div class="careers">
+                <h3 style="cursor: default;">@Model.careers.title</h3>
+                <ul>
+                    @foreach (var career in Model.careers.careerNames)
+                    {
+                        <li style="cursor: default;">@career</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Co-op table section -->
+    <div class="coop-table">
+        <h2 style="cursor: default;" class="yyy">@Model.coopTable.title</h2>
+        <div class="coop-table-container">
+            <table id="coop-table" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Employer</th>
+                        <th>Degree</th>
+                        <th>City</th>
+                        <th>Term</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var coop in Model.coopTable.coopInformation)
+                    {
+                        <tr>
+                            <td style="cursor: default;">@coop.employer</td>
+                            <td style="cursor: default;">@coop.degree</td>
+                            <td style="cursor: default;">@coop.city</td>
+                            <td style="cursor: default;">@coop.term</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Employment table section -->
+    <div class="employment-table">
+        <h2 style="cursor: default;" class="yyy">@Model.employmentTable.title</h2>
+        <div class="employment-table-container">
+            <table id="employment-table" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Employer</th>
+                        <th>Title</th>
+                        <th>Degree</th>
+                        <th>City</th>
+                        <th>Start Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var job in Model.employmentTable.professionalEmploymentInformation)
+                    {
+                        <tr>
+                            <td style="cursor: default;">@job.employer</td>
+                            <td style="cursor: default;">@job.title</td>
+                            <td style="cursor: default;">@job.degree</td>
+                            <td style="cursor: default;">@job.city</td>
+                            <td style="cursor: default;">@job.startDate</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Map container -->
+    <div class="map-container">
+        <iframe title="Student Employment Map"
+                src="https://ischool.gccis.rit.edu/api/map/"
+                width="100%"
+                height="600"
+                frameBorder="0"
+                scrolling="no"
+                allowFullScreen>
+        </iframe>
+    </div>
+}

@@ -1,0 +1,120 @@
+﻿@model P3.Models.ResourcesModel
+
+@{
+    ViewData["Title"] = "Resources";
+}
+
+<section class="resources-section">
+    <h1 class="zzz yyy title-h1-ctm">@Model.title</h1>
+    <p class="zzz">@Model.subTitle</p>
+
+    <section>
+        <h2 style="font-size:2rem;">@Model.studyAbroad.title</h2>
+        <p>@Model.studyAbroad.description</p>
+        <ul>
+            @foreach (var place in Model.studyAbroad.places)
+            {
+                <li>
+                <h3 style="font-size:1.75rem;">@place.nameOfPlace</h3>
+                    <p>@place.description</p>
+                </li>
+            }
+        </ul>
+    </section>
+
+    <section>
+        <h2 style="font-size:2rem;">@Model.studentServices.title</h2>
+        <section>
+            <h3 style="font-size:1.75rem;">@Model.studentServices.academicAdvisors.title</h3>
+            <p>@Model.studentServices.academicAdvisors.description</p>
+            <a href="@Model.studentServices.academicAdvisors.faq.contentHref">@Model.studentServices.academicAdvisors.faq.title</a>
+        </section>
+        <section>
+            <h3 style="font-size:1.75rem;" class="xxx">@Model.studentServices.professonalAdvisors.title</h3>
+            <ul>
+                @foreach (var advisor in Model.studentServices.professonalAdvisors.advisorInformation)
+                {
+                    <li>
+                        <p>Name: @advisor.name</p>
+                        <p>Department: @advisor.department</p>
+                        <p>Email: <a href="mailto:@advisor.email">@advisor.email</a></p>
+                    </li>
+                }
+            </ul>
+        </section>
+        <section>
+            <h3 style="font-size:1.75rem;">@Model.studentServices.facultyAdvisors.title</h3>
+            <p>@Model.studentServices.facultyAdvisors.description</p>
+        </section>
+        <section>
+            <h3 style="font-size:1.75rem;">@Model.studentServices.istMinorAdvising.title</h3>
+            <ul>
+                @foreach (var minorAdvisor in Model.studentServices.istMinorAdvising.minorAdvisorInformation)
+                {
+                    <li>
+                        <p>@minorAdvisor.title</p>
+                        <p>Advisor: @minorAdvisor.advisor</p>
+                        <p>Email: <a href="mailto:@minorAdvisor.email">@minorAdvisor.email</a></p>
+                    </li>
+                }
+            </ul>
+        </section>
+    </section>
+
+    <section>
+        <h2 style="font-size:2rem;">@Model.tutorsAndLabInformation.title</h2>
+        <p>@Model.tutorsAndLabInformation.description</p>
+        <a href="@Model.tutorsAndLabInformation.tutoringLabHoursLink">Tutoring Lab Hours</a>
+    </section>
+
+    <section>
+        <h2 class="xxx" style="font-size:2rem;">@Model.studentAmbassadors.title</h2>
+        <ul>
+            @foreach (var content in Model.studentAmbassadors.subSectionContent)
+            {
+                <li>
+                    <h3 style="font-size:1.75rem;">@content.title.ToUpper()</h3>
+                    <p>@content.description</p>
+                </li>
+            }
+        </ul>
+        <a href="@Model.studentAmbassadors.applicationFormLink">Application Form</a>
+        <p>@Model.studentAmbassadors.note</p>
+    </section>
+
+    <section>
+        <h2 style="font-size:2rem;">Forms</h2>
+        <section>
+            <h3 style="font-size:1.75rem;">Graduate Forms</h3>
+            <ul>
+                @foreach (var form in Model.forms.graduateForms)
+                {
+                    <li><a href="@form.href">@form.formName</a></li>
+                }
+            </ul>
+        </section>
+        <section>
+            <h3 style="font-size:1.75rem;">Undergraduate Forms</h3>
+            <ul>
+                @foreach (var form in Model.forms.undergraduateForms)
+                {
+                    <li><a href="@form.href">@form.formName</a></li>
+                }
+            </ul>
+        </section>
+    </section>
+
+    <section>
+        <h2 style="font-size:2rem;">@Model.coopEnrollment.title</h2>
+        <ul>
+            @foreach (var content in Model.coopEnrollment.enrollmentInformationContent)
+            {
+                <li>
+                    <h3 style="font-size:1.75rem;">@content.title</h3>
+                    <p>@content.description</p>
+                </li>
+            }
+        </ul>
+        <a href="@Model.coopEnrollment.RITJobZoneGuidelink">RIT Job Zone Guide</a>
+    </section>
+</section>

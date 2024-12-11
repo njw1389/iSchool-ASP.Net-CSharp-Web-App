@@ -1,0 +1,249 @@
+html {
+    position: relative;
+    min-height: 100%;
+    background-color: #F76902;
+}
+
+body {
+    margin-bottom: 0px;
+}
+
+/* Styles for active navigation items */
+.nav-item.active {
+    font-weight: bold;
+}
+
+/* Styles for custom header */
+.custom-header {
+    background-color: #F76902;
+}
+
+.custom-header .navbar-brand,
+.custom-header .nav-link {
+    color: #FFFFFF;
+}
+
+.custom-header .nav-link:hover,
+.custom-header .nav-link:focus {
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+
+/* Styles for the custom navbar toggler icon */
+.custom-header .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.navbar-light .navbar-brand:focus, .navbar-light .navbar-brand:hover {
+    color: #FFFFFF;
+}
+
+.nav-link {
+    color: #FFFFFF;
+}
+
+/* Styles for custom mobile menu */
+.Override-Bootstrap-Button {
+    display: none;
+}
+
+@keyframes middleLineAnimation {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes reverseMiddleLineAnimation {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes topLineAnimation {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    50% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    100% {
+        transform: translate(0, 10px) rotate(45deg);
+    }
+}
+
+@keyframes bottomLineAnimation {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    50% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    100% {
+        transform: translate(0, -10px) rotate(-45deg);
+    }
+}
+
+@keyframes reverseTopLineAnimation {
+    0% {
+        transform: translate(0, 10px) rotate(45deg);
+    }
+    50% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+}
+
+@keyframes reverseBottomLineAnimation {
+    0% {
+        transform: translate(0, -10px) rotate(-45deg);
+    }
+    50% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+}
+
+/* Styles for mobile devices */
+@media (max-width: 800px) {
+    .Override-Bootstrap-Button {
+        display: block;
+        position: absolute;
+        z-index: 10000;
+        right: 20px;
+        top: 20px;
+        cursor: pointer;
+    }
+
+    .Override-Bootstrap-TOP,
+    .Override-Bootstrap-MIDDLE,
+    .Override-Bootstrap-BOTTOM {
+        background-color: #FFFFFF;
+        height: 5px;
+        width: 40px;
+        margin: 6px 0;
+    }
+
+    /* Initially hide the navigation menu */
+    .nav-menu {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 200px;
+        height: 100%;
+        background-color: #F76902;
+        z-index: 1000;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transform: translateX(-100%);
+        transition: transform 0.8s ease-out;
+    }
+
+    /* Show the navigation menu when the toggle is active */
+    .show-nav-menu {
+        transform: translateX(0);
+        transition: transform 0.8 ease-out
+    }
+
+    /* Center the list items vertically */
+    .nav-menu li {
+        text-align: center;
+        color: #FFFFFF;
+        margin: 1rem 0;
+        padding: 10px;
+    }
+}
+
+/* Styles for medium-sized screens in People page */
+@media (min-width: 770px) and (max-width: 999px) {
+    .col-md-4 {
+        margin-left: auto;
+        width: 70%;
+        margin-right: auto;
+    }
+
+    .card-img-top {
+        height: auto;
+    }
+}
+
+/* Styles for smaller screens in Eployment page */
+@media (max-width: 1000px) {
+    .employers-career {
+        flex-direction: column !important;
+    }
+
+    .employers {
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .careers {
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+}
+
+@media (max-width: 992px) {
+    .intro-div {
+        width: 90% !important;
+    }
+}
+
+/* General utility classes */
+.zzz {
+    text-align: center;
+}
+
+.yyy {
+    color: #F76902;
+}
+
+.white {
+    color: #FFFFFF;
+}
+
+.title-h1-ctm {
+    margin-top: 15px !important;
+}
+
+.xxx {
+    margin-top: 10px;
+}
+
+.qqq {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* Spinner animation for minors course modal */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

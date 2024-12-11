@@ -1,0 +1,159 @@
+﻿@model P3.Models.IndexViewModel
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<head>
+    <style>
+        /* Styles for the "about" section */
+        .about {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .about p {
+            margin-bottom: 10px;
+        }
+
+        .about .quote {
+            font-style: italic;
+            margin-left: 20px;
+        }
+
+        .about .quote-author {
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .about {
+            padding: 2.5%;
+            margin: 4.5%;
+            margin-top: 25px;
+            border: solid 5px #F76902;
+            text-align: center;
+        }
+
+        /* Styles for the "News" section */
+        #News-Content {
+            background-color: #F76902;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            margin: 20px;
+            margin-top: 0px;
+            font-family: Arial, sans-serif;
+        }
+
+        #News-Top-Controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 0px;
+            margin-left: 20px;
+            margin-right: 20px;
+            margin-top: 10px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px #FFFFFF solid;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+            background-color: #F76902;
+        }
+
+        /* Hover effect for the buttons */
+        #News-Top-Controls button:hover {
+            transform: translateY(-2px);
+        }
+
+        #News-Top-Controls button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            color: #F76902;
+            border: none;
+            padding: 5px 10px;
+            padding-top: 0px;
+            font-size: 35px;
+            margin: 0 10px;
+            border-radius: 5px;
+            height: 40px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Press effect for the buttons */
+        #News-Top-Controls button:active {
+            transform: scale(.98);
+        }
+
+        /* Initially hide all news content divs */
+        #News-Content div {
+            display: none;
+        }
+
+        /* Show the active news content div */
+        #News-Content div.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<!-- Render the "about" section -->
+<h1 style="cursor: default;" class="yyy zzz title-h1-ctm">@Model.About.title</h1>
+
+<section class="about">
+    <p style="cursor: default;">@Model.About.description</p>
+    <p style="cursor: default; margin-top:10px; margin-bottom:-5px;"><i>@Model.About.quote</i></p>
+    <p style="cursor: default;"><strong>-- @Model.About.quoteAuthor --</strong></p>
+</section>
+
+<!-- Render the "News" section -->
+<section>
+    <div id="News-Title">
+        <h1 style="cursor: default;" class="title-h1-ctm zzz yyy qqq">News</h1>
+    </div>
+    <div id="News-Top-Controls">
+        <button onclick="showPrevious()">&lt;</button>
+        <button onclick="showNext()">&gt;</button>
+    </div>
+    <div id="News-Content">
+        @{
+            int index = 0;
+        }
+        @foreach (var article in Model.News.older)
+        {
+            <div class="@(index == 0 ? "active" : "")">
+                <h3 style="margin-bottom:0; font-size: 1.75rem; cursor: default;">@article.title</h3>
+                <p style="cursor: default;"><i>@article.date</i></p>
+                <p style="cursor: default;">@article.description</p>
+            </div>
+            index++;
+        }
+    </div>
+</section>
+
+<script>
+    // Get all news content divs
+    var newsContents = document.querySelectorAll("#News-Content div");
+    var currentIndex = 0;
+
+    // Function to show the next news article
+    function showNext() {
+        newsContents[currentIndex].classList.remove("active");
+        currentIndex = (currentIndex + 1) % newsContents.length;
+        newsContents[currentIndex].classList.add("active");
+    }
+
+    // Function to show the previous news article
+    function showPrevious() {
+        newsContents[currentIndex].classList.remove("active");
+        currentIndex = (currentIndex - 1 + newsContents.length) % newsContents.length;
+        newsContents[currentIndex].classList.add("active");
+    }
+</script>

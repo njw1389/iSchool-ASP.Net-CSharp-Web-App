@@ -1,0 +1,64 @@
+﻿@{
+    // Set the title for the view
+    ViewData["Title"] = "Landing";
+    // Set the layout to use for this view
+    Layout = "_SplashLayout";
+}
+
+<style>
+    /* Styles for the splash container */
+    .splash-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+    }
+
+    /* Styles for the div inside the splash container */
+    .splash-container div {
+        max-width: 1000px;
+        width: 90%;
+    }
+
+    /* Bootstrap Override Styles */
+    .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+        box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #F76902;
+    }
+
+    .btn,
+    .btn:hover {
+        font-weight: 600;
+        background-color: #F76902;
+        color: white;
+    }
+
+    .btn:hover {
+        transform: scale(1.05);
+    }
+</style>
+
+<!-- Splash container -->
+<div class="splash-container">
+    <div>
+        <!-- Heading -->
+        <h1>Welcome to My ASP.Net Core MVC C# Web App</h1>
+
+        <!-- Description -->
+        <p>
+            This web app was for my Client Programming Class. It was my 3rd and final project before the end of the semester.
+            This project was a lot of fun, and I learned a lot about ASP.Net and how to use it to create a web app. We were
+            not taught how to host the web app, so I had to figure that out on my own. I taught myself how to install and
+            configure a server, including installing Nginx, MySQL, PHP, phpMyAdmin, the ASP.Net Core SDK, Configuring Nginx
+            for HTML/PHP & ASP.Net Core Sites/Apps, and testing the server to find open ports and known vulnerabilities,
+            then setting up a secure firewall. This shows that I can quickly learn and adapt to my employer's system/tech
+            stack, that is new to me.
+        </p>
+
+        <!-- Note -->
+        <p><strong>Note:</strong> The JSON data used is very old so some of the links don't work and the information isn't accurate</p>
+
+        <!-- Link to the Home Index action -->
+        <a href="@Url.Action("Index", "Home")" class="btn">Continue to Project</a>
+    </div>
+</div>

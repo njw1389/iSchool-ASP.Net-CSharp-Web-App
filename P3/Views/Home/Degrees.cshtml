@@ -1,0 +1,257 @@
+﻿@model P3.Models.DegreesModel
+
+@{
+    ViewData["Title"] = "Degrees";
+}
+
+<head>
+    <style>
+        /* Styles for degrees section */
+        .degrees-section {
+            margin-bottom: 40px;
+        }
+
+        .degrees-section h2 {
+            color: #F76902;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .degrees-section h3 {
+            color: #FFFFFF;
+            font-weight: 600;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .degrees-section p {
+            margin-bottom: 10px;
+        }
+
+        .degrees-section ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        .degrees-section li {
+            margin-bottom: 5px;
+        }
+
+        .degrees-section a {
+            color: #F76902;
+            text-decoration: none;
+        }
+
+        .degrees-section a:hover {
+            text-decoration: underline;
+        }
+
+        /* Styles for degree top controls */
+        #Degree-Top-Controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 0px;
+            margin-left: 20px;
+            margin-right: 20px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px #FFFFFF solid;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+            background-color: #F76902;
+        }
+
+        #Degree-Top-Controls button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            color: #F76902;
+            border: none;
+            padding: 5px 10px;
+            padding-top: 0px;
+            font-size: 35px;
+            margin: 0 10px;
+            border-radius: 5px;
+            height: 40px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        #Degree-Top-Controls button:hover {
+            transform: translateY(-2px);
+        }
+
+        #Degree-Top-Controls button:active {
+            transform: scale(0.98);
+        }
+
+        /* Styles for undergraduate and graduate pages */
+        #UnderGrad-Pages {
+            background-color: #F76902;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px;
+            margin-top: 0px;
+            margin-bottom: 40px;
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+        }
+
+        #Grad-Pages {
+            background-color: #F76902;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px;
+            margin-top: 0px;
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+        }
+
+        /* Styles for top container */
+        .top-Container {
+            border-top: 3px solid #F76902;
+            border-left: 3px solid #F76902;
+            border-right: 3px solid #F76902;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            margin-left: 20px;
+            margin-right: 20px;
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<div class="degrees-section">
+    <h1 style="margin-bottom: 20px; cursor:default;" class="title-h1-ctm zzz yyy">Our Degrees</h1>
+
+    <!-- Undergraduate degrees section -->
+    <section>
+        <h2 class="zzz yyy qqq" style="font-size:2rem; cursor:default;">Undergraduate Degrees</h2>
+
+        <!-- Degree top controls for undergraduate degrees -->
+        <div id="Degree-Top-Controls">
+            <button onclick="showPreviousUnderGradPage()">&lt;</button>
+            <button onclick="showNextUnderGradPage()">&gt;</button>
+        </div>
+
+        <!-- Undergraduate degree pages -->
+        <ul id="UnderGrad-Pages">
+            @{
+                int underGradIndex = 0;
+            }
+            @foreach (var degree in Model.undergraduate)
+            {
+                <li class="UnderGrad-Page" id="UnderGradPage-@underGradIndex" style="display: none;">
+                    <h3 style="font-size:1.75rem; cursor:default;">@degree.title (@degree.degreeName.ToUpper())</h3>
+                    <p style="cursor: default;">@degree.description</p>
+                    @if (degree.concentrations != null && degree.concentrations.Any())
+                    {
+                        <h4 style="font-size:1.5rem; cursor:default;">Concentrations:</h4>
+                        <ul>
+                            @foreach (var concentration in degree.concentrations)
+                            {
+                                <li style="cursor: default;">@concentration</li>
+                            }
+                        </ul>
+                    }
+                </li>
+                underGradIndex++;
+            }
+        </ul>
+    </section>
+
+    <!-- Graduate degrees section -->
+    <section>
+        <h2 class="zzz yyy qqq" style="font-size:2rem; cursor: default;">Graduate Degrees</h2>
+
+        <!-- Degree top controls for graduate degrees -->
+        <div id="Degree-Top-Controls">
+            <button onclick="showPreviousGradPage()"><span>&lt;</span></button>
+            <button onclick="showNextGradPage()"><span>&gt;</span></button>
+        </div>
+
+        <!-- Graduate degree pages -->
+        <ul id="Grad-Pages">
+            @{
+                int gradIndex = 0;
+            }
+            @foreach (var degree in Model.graduate)
+            {
+                <li class="Grad-Page" id="GradPage-@gradIndex" style="display: none;">
+                    @if (degree.degreeName != "graduate advanced certificates")
+                    {
+                        <h3 style="font-size:1.75rem; cursor: default;">@degree.title (@degree.degreeName.ToUpper())</h3>
+                    }
+                    <p style="cursor: default;">@degree.description</p>
+                    @if (degree.concentrations != null && degree.concentrations.Any())
+                    {
+                        <h4 style="font-size:1.5rem; cursor: default;">Concentrations:</h4>
+                        <ul>
+                            @foreach (var concentration in degree.concentrations)
+                            {
+                                <li style="cursor: default;">@concentration</li>
+                            }
+                        </ul>
+                    }
+                    @if (degree.availableCertificates != null && degree.availableCertificates.Any())
+                    {
+                        <h3 style="font-size:1.75rem; cursor: default;">@System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(degree.degreeName)</h3>
+                        <ul>
+                            @foreach (var certificate in degree.availableCertificates)
+                            {
+                                <li style="cursor: default;">@certificate</li>
+                            }
+                        </ul>
+                    }
+                </li>
+                gradIndex++;
+            }
+        </ul>
+    </section>
+</div>
+
+<script>
+    // Get all undergraduate degree pages
+    var underGradPages = document.querySelectorAll("#UnderGrad-Pages .UnderGrad-Page");
+    var underGradCurrentIndex = 0;
+
+    // Get all graduate degree pages
+    var gradPages = document.querySelectorAll("#Grad-Pages .Grad-Page");
+    var gradCurrentIndex = 0;
+
+    // Function to show the next undergraduate degree page
+    function showNextUnderGradPage() {
+        underGradPages[underGradCurrentIndex].style.display = "none";
+        underGradCurrentIndex = (underGradCurrentIndex + 1) % underGradPages.length;
+        underGradPages[underGradCurrentIndex].style.display = "block";
+    }
+
+    // Function to show the previous undergraduate degree page
+    function showPreviousUnderGradPage() {
+        underGradPages[underGradCurrentIndex].style.display = "none";
+        underGradCurrentIndex = (underGradCurrentIndex - 1 + underGradPages.length) % underGradPages.length;
+        underGradPages[underGradCurrentIndex].style.display = "block";
+    }
+
+    // Function to show the next graduate degree page
+    function showNextGradPage() {
+        gradPages[gradCurrentIndex].style.display = "none";
+        gradCurrentIndex = (gradCurrentIndex + 1) % gradPages.length;
+        gradPages[gradCurrentIndex].style.display = "block";
+    }
+
+    // Function to show the previous graduate degree page
+    function showPreviousGradPage() {
+        gradPages[gradCurrentIndex].style.display = "none";
+        gradCurrentIndex = (gradCurrentIndex - 1 + gradPages.length) % gradPages.length;
+        gradPages[gradCurrentIndex].style.display = "block";
+    }
+
+    // Show the first undergraduate and graduate degree pages initially
+    underGradPages[0].style.display = "block";
+    gradPages[0].style.display = "block";
+</script>
